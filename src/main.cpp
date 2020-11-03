@@ -2,8 +2,9 @@
 #include <GFX/RenderCore.h>
 #include <Utilities/Timer.h>
 #include <GFX/2D/Sprite.h>
+#include "Particles.h"
+#include "MainState.h"
 using namespace Stardust;
-
 
 auto main() -> int {
 	Platform::initPlatform();
@@ -20,6 +21,10 @@ auto main() -> int {
 
 	GFX::g_RenderCore->setDefault2DMode();
 	Utilities::g_AppTimer.reset();
+	
+	ParticleSystem* particles = new ParticleSystem(100, "./assets/Particle.png");
+
+	MainState* mainState = new MainState();
 
 	while (true) {
 		GFX::g_RenderCore->beginFrame();
@@ -36,6 +41,13 @@ auto main() -> int {
 		GFX::g_RenderCore->clear();
 		logoSprite->draw();
 
+		particles->update(dt);
+		particles->draw();
+
+		if (Utilities::g_AppTimer.elapsed() > 5) {
+			mainState->draw();
+			mainState->update();
+		}
 
 		GFX::g_RenderCore->endFrame();
 		Platform::platformUpdate();
