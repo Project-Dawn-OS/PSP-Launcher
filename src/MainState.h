@@ -16,4 +16,6 @@ private:
 	GFX::UI::TextRenderer* textRenderer;
 	GFX::Render2D::Sprite* blankSprite, *selectSprite;
 	unsigned int blankTex, selectTex;
+
+	int selX, selY;
 };

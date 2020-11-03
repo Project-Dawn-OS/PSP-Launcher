@@ -1,4 +1,5 @@
 #include "MainState.h"
+#include <Utilities/Input.h>
 
 MainState::MainState()
 {
@@ -11,6 +12,7 @@ MainState::MainState()
 
 	selectTex = GFX::g_TextureManager->loadTex("./assets/selector.png", GFX_FILTER_LINEAR, GFX_FILTER_LINEAR, true);
 	selectSprite = new GFX::Render2D::Sprite(selectTex);
+	selX = selY = 0;
 }
 
 MainState::~MainState()
@@ -19,6 +21,33 @@ MainState::~MainState()
 
 void MainState::update()
 {
+	if (Utilities::KeyPressed(PSP_CTRL_UP)) {
+		selY--;
+		if (selY < 0) {
+			selY = 0;
+		}
+	}
+
+	if (Utilities::KeyPressed(PSP_CTRL_DOWN)) {
+		selY++;
+		if (selY > 4) {
+			selY = 4;
+		}
+	}
+
+	if (Utilities::KeyPressed(PSP_CTRL_LEFT)) {
+		selX--;
+		if (selX < 0) {
+			selX = 0;
+		}
+	}
+
+	if (Utilities::KeyPressed(PSP_CTRL_RIGHT)) {
+		selX++;
+		if (selX > 4) {
+			selX = 4;
+		}
+	}
 }
 
 void MainState::draw()
@@ -34,7 +63,7 @@ void MainState::draw()
 		}
 	}
 
-	selectSprite->setPosition(40, 48);
+	selectSprite->setPosition(40 + selX*76, 48 + selY*44);
 	selectSprite->draw();
 
 	textRenderer->setStyle({ 255, 255, 255, 255, 0.67f, TEXT_RENDERER_CENTER, TEXT_RENDERER_RIGHT, 0.0f, 0xFF000000 });
