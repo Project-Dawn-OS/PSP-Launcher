@@ -4,10 +4,18 @@
 #include <GFX/2D/Sprite.h>
 #include "Particles.h"
 #include "MainState.h"
+#include <Utilities/Logger.h>
+#include <Utilities/Input.h>
 using namespace Stardust;
 
 auto main() -> int {
 	Platform::initPlatform();
+
+	Utilities::app_Logger->currentLevel = Utilities::LOGGER_LEVEL_TRACE;
+	Utilities::detail::core_Logger->currentLevel = Utilities::LOGGER_LEVEL_TRACE;
+
+	Utilities::app_Logger->autoFlush = true;
+	Utilities::detail::core_Logger->autoFlush = true;
 
 	unsigned int logoTex = GFX::g_TextureManager->loadTex("./assets/Logo.png", GFX_FILTER_LINEAR, GFX_FILTER_LINEAR, true);
 	GFX::Render2D::Sprite* logoSprite = new GFX::Render2D::Sprite(logoTex);
@@ -26,7 +34,7 @@ auto main() -> int {
 
 	MainState* mainState = new MainState();
 
-	while (true) {
+	while (!Utilities::KeyPressed(PSP_CTRL_START)) {
 		GFX::g_RenderCore->beginFrame();
 		double dt = Utilities::g_AppTimer.deltaTime();
 
