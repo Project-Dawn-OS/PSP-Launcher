@@ -5,6 +5,15 @@
 
 using namespace Stardust;
 
+struct ProgramInfo {
+	std::string title;
+	std::string path; // Used for categorization purposes
+	bool hasICON;
+	bool hasPIC;
+	GFX::Render2D::Sprite* iconSprite, *picSprite;
+	unsigned int iconTex, picTex;
+};
+
 class MainState {
 public:
 	MainState();
@@ -15,13 +24,13 @@ public:
 
 private:
 	GFX::UI::TextRenderer* textRenderer;
-	GFX::Render2D::Sprite* blankSprite, *selectSprite;
-	unsigned int blankTex, selectTex;
+	GFX::Render2D::Sprite* blankSprite, *selectSprite, *dropSprite;
+	unsigned int blankTex, selectTex, dropTex;
 	int selX, selY;
 
 	void scanDirectories();
 	void validateDirectories();
 
 	std::vector<std::string> directories;
-	std::vector<std::string> validDirectories;
+	std::vector<ProgramInfo> validDirectories;
 };

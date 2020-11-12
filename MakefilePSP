@@ -2,6 +2,7 @@ TARGET = Launcher
 OBJS = src/main.o \
 src/Particles.o \
 src/MainState.o \
+src/Support.o \
 
 INCDIR = $(PSPPATH)/include
 INCDIR += Stardust-Engine/Platform/include Stardust-Engine/Deps/include Stardust-Engine/Utilities/include Stardust-Engine/Core/include

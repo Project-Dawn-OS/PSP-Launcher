@@ -141,6 +141,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MainState.cpp" />
+    <ClCompile Include="src\Particles.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\MainState.h" />
+    <ClInclude Include="src\Particles.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

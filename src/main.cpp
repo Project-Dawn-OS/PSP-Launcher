@@ -6,10 +6,14 @@
 #include "MainState.h"
 #include <Utilities/Logger.h>
 #include <Utilities/Input.h>
+
+
 using namespace Stardust;
 
 auto main() -> int {
 	Platform::initPlatform();
+
+	pspSdkLoadStartModule("Support.prx", PSP_MEMORY_PARTITION_KERNEL);
 
 	Utilities::app_Logger->currentLevel = Utilities::LOGGER_LEVEL_TRACE;
 	Utilities::detail::core_Logger->currentLevel = Utilities::LOGGER_LEVEL_TRACE;
