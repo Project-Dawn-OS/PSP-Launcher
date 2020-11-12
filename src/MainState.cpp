@@ -22,6 +22,8 @@ MainState::MainState()
 	validDirectories.clear();
 	scanDirectories();
 	validateDirectories();
+
+	scrlY = 0;
 }
 
 MainState::~MainState()
@@ -37,6 +39,10 @@ void MainState::update()
 	if (Utilities::KeyPressed(PSP_CTRL_UP)) {
 		selY--;
 		if (selY < 0) {
+			if (scrlY > 0) {
+				scrlY--;
+			}
+
 			selY = 0;
 		}
 	}
@@ -44,6 +50,9 @@ void MainState::update()
 	if (Utilities::KeyPressed(PSP_CTRL_DOWN)) {
 		selY++;
 		if (selY > 4) {
+			if (scrlY < (validDirectories.size() - 25) / 5 + 1) {
+				scrlY++;
+			}
 			selY = 4;
 		}
 	}
@@ -63,7 +72,7 @@ void MainState::update()
 	}
 
 	if (Utilities::KeyPressed(PSP_CTRL_CROSS)) {
-		int selIDX = selX + selY * 5;
+		int selIDX = selX + (selY+scrlY) * 5;
 
 		if (selIDX < validDirectories.size()) {
 			RunEboot(validDirectories[selIDX].path.c_str());
@@ -72,9 +81,11 @@ void MainState::update()
 }
 
 void MainState::draw() {
-	int selIDX = selX + selY * 5;
-	if (validDirectories[selIDX].hasPIC) {
-		validDirectories[selIDX].picSprite->draw();
+	int selIDX = selX + (selY+scrlY) * 5;
+	if (selIDX < validDirectories.size()) {
+		if (validDirectories[selIDX].hasPIC) {
+			validDirectories[selIDX].picSprite->draw();
+		}
 	}
 
 	textRenderer->setStyle({ 255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_LEFT, 0.0f, 0xFF000000 });
@@ -82,7 +93,7 @@ void MainState::draw() {
 
 	for (int y = 0; y < 5; y++) {
 		for (int x = 0; x < 5; x++) {
-			int idx = x + y * 5;
+			int idx = x + (y+scrlY) * 5;
 
 			if (idx < validDirectories.size()) {
 				//Try to draw an icon

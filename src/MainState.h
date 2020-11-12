@@ -27,6 +27,7 @@ private:
 	GFX::Render2D::Sprite* blankSprite, *selectSprite, *dropSprite;
 	unsigned int blankTex, selectTex, dropTex;
 	int selX, selY;
+	int scrlY;
 
 	void scanDirectories();
 	void validateDirectories();
