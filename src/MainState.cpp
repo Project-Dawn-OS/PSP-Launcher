@@ -6,7 +6,7 @@ MainState::MainState()
 {
 	textRenderer = new GFX::UI::TextRenderer();
 	textRenderer->init("./assets/noto/ltn8.pgf");
-	textRenderer->setStyle({255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_CENTER, 0.0f, 0xFF000000});
+	textRenderer->setStyle({255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_CENTER, 0.0f, true});
 
 	blankTex = GFX::g_TextureManager->loadTex("./assets/blank.png", GFX_FILTER_LINEAR, GFX_FILTER_LINEAR, true);
 	blankSprite = new GFX::Render2D::Sprite(blankTex);
@@ -88,7 +88,7 @@ void MainState::draw() {
 		}
 	}
 
-	textRenderer->setStyle({ 255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_LEFT, 0.0f, 0xFF000000 });
+	textRenderer->setStyle({ 255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_LEFT, 0.0f, true});
 	textRenderer->draw("PSP-Launcher", { 0, 16 });
 
 	for (int y = 0; y < 5; y++) {
@@ -111,7 +111,7 @@ void MainState::draw() {
 				}
 
 				if (idx == selIDX) {
-					textRenderer->setStyle({ 255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_RIGHT, 0.0f, 0xFF000000 });
+					textRenderer->setStyle({ 255, 255, 255, 255, 1.0f, TEXT_RENDERER_CENTER, TEXT_RENDERER_RIGHT, 0.0f, true });
 					textRenderer->draw(validDirectories[idx].title, { 480, 16 });
 				}
 			}
@@ -124,7 +124,7 @@ void MainState::draw() {
 	selectSprite->setPosition(40 + selX*76, 48 + selY*44);
 	selectSprite->draw();
 
-	textRenderer->setStyle({ 255, 255, 255, 255, 0.67f, TEXT_RENDERER_CENTER, TEXT_RENDERER_RIGHT, 0.0f, 0xFF000000 });
+	textRenderer->setStyle({ 255, 255, 255, 255, 0.67f, TEXT_RENDERER_CENTER, TEXT_RENDERER_RIGHT, 0.0f, true });
 	textRenderer->draw("Experimental!", { 480, 260 });
 }
 
