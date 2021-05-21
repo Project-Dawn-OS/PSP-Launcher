@@ -133,7 +133,7 @@ void MainState::scanDirectories(){
 	struct dirent* dp;
 	DIR* dfd;
 
-	dfd = opendir("ms0:/PSP/GAME/");
+	dfd = opendir("/PSP/GAME/");
 	if (dfd != NULL) {
 		while ((dp = readdir(dfd)) != NULL) {
 			std::string name = dp->d_name;
@@ -172,9 +172,9 @@ struct SFOEntry {
 
 void MainState::validateDirectories()
 {
+	int ld_cnt = 0;
 	for (auto& s : directories) {
-		std::fstream f("ms0:/PSP/GAME/" + s + "/EBOOT.PBP");
-
+		std::fstream f("/PSP/GAME/" + s + "/EBOOT.PBP");
 		if (f.is_open()) {
 			ProgramInfo prog;
 			prog.picTex = 0;
@@ -187,7 +187,7 @@ void MainState::validateDirectories()
 
 			prog.title = "(No Title)";
 			
-			prog.path = "ms0:/PSP/GAME/" + s + "/EBOOT.PBP";
+			prog.path = "/PSP/GAME/" + s + "/EBOOT.PBP";
 			
 			f.close();
 
@@ -253,7 +253,7 @@ void MainState::validateDirectories()
 				delete[] entries;
 
 				int icon0Size = header.offset[2] - header.offset[1];
-				if (icon0Size > 0) {
+				if (icon0Size > 0 && ld_cnt < 25) {
 					prog.hasICON = true;
 
 					uint8_t* imgBuffer = new uint8_t[icon0Size];
@@ -272,7 +272,7 @@ void MainState::validateDirectories()
 
 				int pic1Size = header.offset[5] - header.offset[4];
 
-				if (pic1Size > 0) {
+				if (pic1Size > 0 && ld_cnt < 25) {
 					prog.hasPIC = true;
 
 					uint8_t* imgBuffer = new uint8_t[pic1Size];
@@ -297,7 +297,7 @@ void MainState::validateDirectories()
 			}
 
 			fclose(file);
-
+			ld_cnt++;
 		}
 		f.close();
 	}
